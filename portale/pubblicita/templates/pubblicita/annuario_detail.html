@@ -1,0 +1,93 @@
+{%extends 'pubblicita/base.html'%}
+{%block title%}Annuario{%endblock title%}
+{% block content%}
+
+
+<div class="container-fluid">
+
+    <div class="row">
+        <!--IMMAGINI a dx-->
+        <div class="col-md-6">
+            <!--COVER-->
+            <div class="row">
+                <img  style='height: 100%; width: 100%; object-fit: contain' src="{{annuario.cover_img.url}}" alt="..." >
+            </div>
+            <!--PAGINE INTERNE-->
+            <div class="row">
+                {%for pag in annuario.immaginiannuario_set.all%}
+                <div class="card" style="width: 5rem;">
+
+                    <img onclick="detail('{{pag.img.url}}')" class="card-img-top" id="img-{{pag.img.id}}" src="{{pag.img.url}}" alt="..." >
+
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+        <!--TESTI a sx-->
+        <div class="col-md-6">
+            <div>
+                <h1>{{annuario.nome}}</h1>
+                <h2>{{annuario.intro_title}}</h2>
+                <p>{{annuario.intro_text}}</p>
+                <p>{{annuario.intro_footer}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        {%if prev%}
+        <div class="col-md-4"><a href="{%url 'annuario-detail' prev%}">Precedente</a></div>
+        {%else%}
+        <div class="col-md-4">Precedente</div>
+        {%endif%}
+
+        <div class="col-md-4"></div>
+        {%if next%}
+        <div class="col-md-4"><a href="{%url 'annuario-detail' next%}">Successivo</a></div>
+        {%else%}
+        <div class="col-md-4">Successivo</div>
+        {%endif%}
+
+
+    </div>
+
+
+</div>
+
+<!-- MODAL INGRADICI IMMAGINE -->
+<div class="modal" id="imgModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Modal Heading</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div id="modal-img-div" class="modal-body">
+
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+    function detail(url){
+        var img_str = '<img style= "max-width:100%;max-height:100%;"id="theImg" src='+url+'/>'
+        $('#modal-img-div').prepend(img_str)
+        $('#imgModal').modal('toggle');
+
+    }
+</script>
+{%endblock%}
+

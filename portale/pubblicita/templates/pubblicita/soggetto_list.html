@@ -1,0 +1,112 @@
+{%extends 'pubblicita/base.html'%}
+{%load static%}
+
+{%block title%}Soggetti{%endblock title%}
+
+{% block content%}
+
+<script src="https://d3js.org/d3.v5.min.js"></script>
+
+
+<div class="container-fluid">
+    <div class="row">
+            <div class="col-md-4">
+                <label for="ruolo_select">Ruolo</label>
+                <select id="ruolo_select" name="ruolo">
+                <option value="0">Tutti</option>
+                {%for opt in ruoli%}
+
+                  <option value="{{opt.id}}" {%if opt.id == opts.ruolo%}selected{%endif%}>{{opt.nome}}</option>
+                {%endfor%}
+            </select>
+            </div>
+            <div class="col-md-4">
+                <label for="annuario_select">Annuario</label>
+                <select id="annuario_select" name="annuario">
+                <option value="0">Tutti</option>
+                {%for opt in annuari%}
+                  <option value="{{opt.id}}" {%if opt.id == opts.annuario%}selected{%endif%}>{{opt.nome}}</option>
+                {%endfor%}
+            </select>
+            </div>
+            <div class="col-md-4">
+                <label for="ordine_select">Ordinamento</label>
+                <select id="ordine_select" name="ordine">
+                {%for opt in ordini%}
+                  <option value="{{opt.id}}" {%if opt.id == opts.ordine%}selected{%endif%}>{{opt.nome}}</option>
+                {%endfor%}
+            </select>
+            </div>
+    </div>
+
+     <div class="row">
+
+        <div class="col-4">
+        <!-- ELENCO SOGGETTI-->
+        <div id='listaSoggetti'></div>
+    </div>
+        <div class="col-8">
+     <section id="immagini"></section>
+    </div>
+
+    </div>
+</div>
+
+
+<script src="{%static 'pubblicita/functions.js'%}"></script>
+
+
+
+<script>
+
+var url_soggetto_list_ajax = "{%url 'soggetti-list-ajax' %}";
+var url_opere_soggetto_ajax = "{%url 'opere-soggetto-ajax'%}"
+var url_soggetto_detail = "{%url 'soggetto-detail' 0%}"
+
+
+var ruolo_id = $('#ruolo_select option:selected').val();
+var annuario_id = $('#annuario_select option:selected').val();
+var ordinamento_id =$('#ordine_select option:selected').val();
+var ajax_imgs=null;
+
+window.onload = function () {
+    aggiorna_list();
+}
+
+
+$('#ruolo_select').on('change', function() {
+    ruolo_id = $('#ruolo_select option:selected').val();
+    aggiorna_list();
+    });
+
+$('#annuario_select').on('change', function() {
+    annuario_id = $('#annuario_select option:selected').val();
+    aggiorna_list();
+    });
+$('#ordine_select').on('change', function() {
+    ordinamento_id =$('#ordine_select option:selected').val();
+    aggiorna_list();
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+{%endblock%}
+

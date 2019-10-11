@@ -1,0 +1,29 @@
+{%extends 'pubblicita/base.html'%}
+
+{%block title%}Annuari{%endblock title%}
+
+{% block content%}
+<div class="container-fluid">
+<div class="card-group">
+{%for annuario in annuari%}
+    <div class="col-sm-3">
+        <div class="card" style="width: 18rem;"><div>
+             <a href="{%url 'annuario-detail' annuario.id%}" class="btn btn-primary">
+            {%if annuario.cover_img%}
+                <img src="{{ annuario.cover_img.url }}" class="card-img-top" alt="...">
+            {%else%}
+                <img src="..." class="card-img-top" alt="...">
+            {%endif%}
+                 </a></div>
+          <div class="card-body">
+            <h5 class="card-title">{{annuario.nome}}</h5>
+            <p class="card-text">{{annuario.giuria}}</p>
+
+          </div>
+        </div>
+    </div>
+
+    {%endfor%}
+</div>
+</div>
+{%endblock%}
