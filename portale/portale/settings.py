@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'pubblicita',
     'imagekit',
-    'bootstrap4',
+  #  'bootstrap4',
 
     'django.contrib.admin',
     'django.contrib.auth',
