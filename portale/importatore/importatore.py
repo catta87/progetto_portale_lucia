@@ -320,10 +320,14 @@ def upload_annuari(annuario_data):
 if __name__ == '__main__':
 
     from pubblicita.models import *
+    import os
 
-    src=r'/Users/cristian/Desktop/MATERIALI SITO-1/relazioni.xlsx'
-    imgs_base_src = r'/Users/cristian/Desktop/MATERIALI SITO-1/OPERE'
-    annuario_data = r'/Users/cristian/Desktop/MATERIALI SITO-1/ANNUARI'
+    BASE_PATH = r'/Users/cristian/Desktop'
+
+
+    src=os.path.join('MATERIALI SITO-1/relazioni.xlsx')
+    imgs_base_src = os.path.join('MATERIALI SITO-1/OPERE')
+    annuario_data = os.path.join('MATERIALI SITO-1/ANNUARI')
 
     data = reader(src, imgs_base_src)
     for opera in data:

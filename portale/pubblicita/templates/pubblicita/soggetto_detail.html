@@ -6,130 +6,113 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="{%static 'pubblicita/functions.js'%}"></script>
 
+<div class="soggetto-detail">
 
-<style>
+   <div class="soggetto-detail__sx">
 
-    .sezione {
-        border-style: solid;
-        border-color: black;
-        margin: 1px 0px 1px 0px;
-        width: 50%;
-        }
+      <div class="-intro">
+
+         <div class="-intro__name">
+            <h1>{{soggetto.nome}}</h1>
+            <h1>{{soggetto.cognome}}</h1>
+            {%if soggetto.citta%}<p>({{soggetto.citta}})</p>{%endif%}
+         </div>
+
+         <div class="-intro__ruoli">
+            {%for ruolo in ruoli%}
+            <span>{{ruolo.ruolo__sigla}}</span>
+            <span>{{ruolo.n_ruoli}}</span>
+            {%endfor%}
+         </div>
+
+      </div>
+
+      <!-- Grafici -->
+      <div id="div_grafici"></div>
 
 
+   </div>
 
-</style>
-
-<div class="container">
-    <div class="row">
-
-        <div class="col-md-6 sezione">
-
-            <div class="jumbotron">
-                <div class="row">
-                    <div class="col">
-                        <h1>{{soggetto.nome}}</h1>
-                        <h1>{{soggetto.cognome}}</h1>
-                        {%if soggetto.citta%}<p>({{soggetto.citta}})</p>{%endif%}
-                    </div>
-                    <div class="col">
-                        {%for ruolo in ruoli%}
-                        <div class="row">
-                            <span class="badge badge-pill badge-secondary">{{ruolo.ruolo__sigla}}</span>
-                            <span class="badge badge-pill badge-secondary">{{ruolo.n_ruoli}}</span>
-                        </div>
-                        {%endfor%}
-                    </div>
-                </div>
+   <div class="soggetto-detail__dx">
+      <!-- Immagini -->
+      <div id="div_immagini">
+         <h2>Opere</h2>
+         {% regroup opere by annuario.nome as gruppi %}
+         {% for gruppo in gruppi %}
+         <div class="container">
+            <a href="#gr_{{ gruppo.grouper}}" data-toggle="collapse">
+               <h4 style="display:inline">{{ gruppo.grouper}}</h4>
+            </a>
+            <p style="display: inline">({{gruppo.list|length}} opere)</p>
+            <div id="gr_{{ gruppo.grouper}}" class="collapse">
+               {% for img in gruppo.list %}
+               <img onclick="detail('{{img.img.url}}')" class="img-thumbnail" src="{{img.thumbnail.url}}" alt="...">
+               {% endfor %}
             </div>
-
-            <!-- Grafici -->
-            <div id="div_grafici"></div>
-
-
-        </div>
-        <!-- SEZIONE DESTRA -->
-        <div class="col-md-6 sezione">
-        <!-- Immagini -->
-            <div class="container" id="div_immagini">
-                <h2>Opere</h2>
-            {% regroup opere by annuario.nome as gruppi %}
-            {% for gruppo in gruppi %}
-                <div class="container">
-                    <a href="#gr_{{ gruppo.grouper}}" data-toggle="collapse">
-                        <h4 style="display:inline">{{ gruppo.grouper}}</h4></a>
-                        <p style="display: inline">({{gruppo.list|length}} opere)</p>
-                    <div id="gr_{{ gruppo.grouper}}" class="collapse">
-                        {% for img in gruppo.list %}
-                          <img onclick="detail('{{img.img.url}}')" class="img-thumbnail" src="{{img.thumbnail.url}}" alt="..." >
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endfor %}
-            </div>
-     <!-- Fonti Esternte -->
-            <div id="div_fonti">
-                <h2>Ricerca Esterna</h2>
-                <a href="http://www.aiap.it/cdpg/?find=1&ricercalib[all]={{soggetto.nome_completo}}" target="_blank">Ricerca AIAP CDPG</a>
-            </div>
-        </div>
-
-    </div>
+         </div>
+         {% endfor %}
+      </div>
+      <!-- Fonti Esternte -->
+      <div id="div_fonti">
+         <h2>Ricerca Esterna</h2>
+         <a href="http://www.aiap.it/cdpg/?find=1&ricercalib[all]={{soggetto.nome_completo}}" target="_blank">Ricerca
+            AIAP CDPG</a>
+      </div>
+   </div>
 
 </div>
 
 
 <!-- MODAL INGRADICI IMMAGINE -->
 <div class="modal" id="imgModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
+   <div class="modal-dialog">
+      <div class="modal-content">
 
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Modal Heading</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <h4 class="modal-title">Modal Heading</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+
+         <!-- Modal body -->
+         <div id="modal-img-div" class="modal-body">
+
+         </div>
+
+         <!-- Modal footer -->
+         <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+         </div>
+
       </div>
-
-      <!-- Modal body -->
-      <div id="modal-img-div" class="modal-body">
-
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-
-    </div>
-  </div>
+   </div>
 </div>
 
 
 <script>
 
-    function detail(url){
-        var img_str = '<img style= "max-width:100%;max-height:100%;"id="theImg" src='+url+'/>'
-        $('#modal-img-div').prepend(img_str)
-        $('#imgModal').modal('toggle');
+   function detail(url) {
+      var img_str = '<img style= "max-width:100%;max-height:100%;"id="theImg" src=' + url + '/>'
+      $('#modal-img-div').prepend(img_str)
+      $('#imgModal').modal('toggle');
 
-    }
+   }
 </script>
 
 <script>
 
 
-        var ar_data = JSON.parse('{{AR|safe}}');
-        var ph_data = JSON.parse('{{PH|safe}}');
-        var az_data = JSON.parse('{{AZ|safe}}');
-        var ap_data = JSON.parse('{{AP|safe}}');
-        var ad_data = JSON.parse('{{AD|safe}}');
-        var tipi_data = JSON.parse('{{tipi|safe}}');
+   var ar_data = JSON.parse('{{AR|safe}}');
+   var ph_data = JSON.parse('{{PH|safe}}');
+   var az_data = JSON.parse('{{AZ|safe}}');
+   var ap_data = JSON.parse('{{AP|safe}}');
+   var ad_data = JSON.parse('{{AD|safe}}');
+   var tipi_data = JSON.parse('{{tipi|safe}}');
 
-        crea_grafici(ar_data,ph_data,az_data,ap_data,ad_data,JSON.parse('{{tipi|safe}}'))
+   crea_grafici(ar_data, ph_data, az_data, ap_data, ad_data, JSON.parse('{{tipi|safe}}'))
 
 
 
 </script>
 
 {%endblock%}
-

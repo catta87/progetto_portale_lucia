@@ -3,27 +3,27 @@
 {%block title%}Annuari{%endblock title%}
 
 {% block content%}
-<div class="container-fluid">
-<div class="card-group">
-{%for annuario in annuari%}
-    <div class="col-sm-3">
-        <div class="card" style="width: 18rem;"><div>
-             <a href="{%url 'annuario-detail' annuario.id%}" class="btn btn-primary">
-            {%if annuario.cover_img%}
-                <img src="{{ annuario.cover_img.url }}" class="card-img-top" alt="...">
-            {%else%}
-                <img src="..." class="card-img-top" alt="...">
-            {%endif%}
-                 </a></div>
-          <div class="card-body">
+<div class="annuario">
+   <div class="annuario__wrapper">
+
+      {%for annuario in annuari%}
+      <div class="annuario__card">
+         <div class="-image">
+            <a href="{%url 'annuario-detail' annuario.id%}">
+               {%if annuario.cover_img%}
+               <img src="{{ annuario.cover_img.url }}" alt="...">
+               {%else%}
+               <img src="..." alt="...">
+               {%endif%}
+            </a>
+         </div>
+         <div class="-content">
             <h5 class="card-title">{{annuario.nome}}</h5>
             <p class="card-text">{{annuario.giuria}}</p>
+         </div>
+      </div>
+      {%endfor%}
 
-          </div>
-        </div>
-    </div>
-
-    {%endfor%}
-</div>
+   </div>
 </div>
 {%endblock%}

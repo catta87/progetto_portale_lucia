@@ -1,50 +1,63 @@
+{% load static %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{%block title%}{%endblock title%}</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.js"integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<head>
+   <meta charset="UTF-8">
+   <title>{%block title%}{%endblock title%}</title>
+
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+   <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i&display=swap"
+      rel="stylesheet">
+   <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+      crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"></script>
+
+
+   <link rel="stylesheet" type="text/css" href="{% static 'pubblicita/stili.css' %}">
+
+   {%block style%}
+   {%endblock%}
+
 
 
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="row">
-        <a class="navbar-brand" href="{%url 'home'%}">PUBBLICITÀ IN ITALIA 1954–1980</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+   <nav>
+      <div class="nav-wrapper">
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{%url 'come-funziona'%}">Come Funziona <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{%url 'annuari-list'%}">Annuari</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{%url 'soggetti-list'%}">Soggetti</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{%url 'relazioni'%}">Relazioni</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{%url 'contatti'%}">Contatti</a>
-                </li>
-            </ul>
-        </div>
-        </div>
+         <a class="nav-id" href="{%url 'home'%}">PUBBLICITÀ IN ITALIA 1954–1980</a>
 
-    </nav>
+         <ul class="nav-links">
+            <li class="nav-links__item">
+               <a href="{%url 'come-funziona'%}">Come Funziona</a>
+            </li>
+            <li class="nav-links__item">
+               <a href="{%url 'annuari-list'%}">Annuari</a>
+            </li>
+            <li class="nav-links__item">
+               <a href="{%url 'soggetti-list'%}">Soggetti</a>
+            </li>
+            <li class="nav-links__item">
+               <a href="{%url 'relazioni'%}">Relazioni</a>
+            </li>
+            <li class="nav-links__item">
+               <a href="{%url 'contatti'%}">Contatti</a>
+            </li>
+         </ul>
 
-    {%block content%}
+      </div>
+   </nav>
 
-    {%endblock%}
+   {%block content%}
+
+   {%endblock%}
 
 </body>
 

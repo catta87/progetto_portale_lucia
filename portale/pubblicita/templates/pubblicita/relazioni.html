@@ -11,50 +11,52 @@
 
 <script src="{%static 'pubblicita/functions.js'%}"></script>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-4">
-            <label for="select-r1">Ruolo 1</label>
-            <select id="select-r1">
-                <option value="0" selected>Tutti</option>
-                {%for opt in ruoli%}
-                <option value="{{opt.id}}" {%if opt.id == opts.ruolo%}selected{%endif%}>{{opt.nome}}</option>
-                {%endfor%}
-            </select>
-        </div>
-        <div class="col-md-4">
-            <label for="select-r2">Ruolo 2</label>
-            <select id="select-r2">
-                <option value="0" selected>Tutti</option>
-                {%for opt in ruoli%}
-                <option value="{{opt.id}}" {%if opt.id == opts.ruolo%}selected{%endif%}>{{opt.nome}}</option>
-                {%endfor%}
-            </select>
-        </div>
-        <div class="col-md-4">
-            <label for="select-annuario">Annuario</label>
-            <select id="select-annuario">
-                <option value="0" selected>Tutti</option>
-                {%for opt in annuari%}
-                <option value="{{opt.id}}" {%if opt.id == opts.nome%}selected{%endif%}>{{opt.nome}}</option>
-                {%endfor%}
-            </select>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Ruolo 1 </h2>
-            <div id="s1"></div>
-        </div>
-        <div class="col-md-4">
-            <h2>Ruolo 2</h2>
-            <div id="s2"></div>
-        </div>
-        <div class="col-md-4">
-           <h2>Risultato</h2>
-            <div id="r"></div>
-        </div>
-    </div>
+<div class="relazioni">
+
+   <div class="-filtri">
+      <div class="-filtri__item">
+         <label for="select-r1">Ruolo 1</label>
+         <select id="select-r1">
+            <option value="0" selected>Tutti</option>
+            {%for opt in ruoli%}
+            <option value="{{opt.id}}" {%if opt.id == opts.ruolo%}selected{%endif%}>{{opt.nome}}</option>
+            {%endfor%}
+         </select>
+      </div>
+      <div class="-filtri__item">
+         <label for="select-r2">Ruolo 2</label>
+         <select id="select-r2">
+            <option value="0" selected>Tutti</option>
+            {%for opt in ruoli%}
+            <option value="{{opt.id}}" {%if opt.id == opts.ruolo%}selected{%endif%}>{{opt.nome}}</option>
+            {%endfor%}
+         </select>
+      </div>
+      <div class="-filtri__item">
+         <label for="select-annuario">Annuario</label>
+         <select id="select-annuario">
+            <option value="0" selected>Tutti</option>
+            {%for opt in annuari%}
+            <option value="{{opt.id}}" {%if opt.id == opts.nome%}selected{%endif%}>{{opt.nome}}</option>
+            {%endfor%}
+         </select>
+      </div>
+   </div>
+
+   <div class="row relazioni__content">
+      <div class="col-md-4">
+         <h2>Ruolo 1 </h2>
+         <div id="s1"></div>
+      </div>
+      <div class="col-md-4">
+         <h2>Ruolo 2</h2>
+         <div id="s2"></div>
+      </div>
+      <div class="col-md-4">
+         <h2>Risultato</h2>
+         <div id="r"></div>
+      </div>
+   </div>
 
 </div>
 
@@ -62,42 +64,42 @@
 <script>
 
 
-    var url_rel_sog1 ="{%url 'rel-sog1-ajax'%}"
-    var url_rel_sog2 ="{%url 'rel-sog2-ajax'%}"
-    var url_s1_s2_op ="{%url 'sog1-r2-opere-ajax'%}"
-    var url_opere_s1_s2 = "{%url 'opere-s1-s2-ajax'%}"
+   var url_rel_sog1 = "{%url 'rel-sog1-ajax'%}"
+   var url_rel_sog2 = "{%url 'rel-sog2-ajax'%}"
+   var url_s1_s2_op = "{%url 'sog1-r2-opere-ajax'%}"
+   var url_opere_s1_s2 = "{%url 'opere-s1-s2-ajax'%}"
 
-    var id_r1 = $('#select-r1 option:selected').val();
-    var id_r2 = $('#select-r2 option:selected').val();
-    var annuario_id = $('#select-annuario option:selected').val();
+   var id_r1 = $('#select-r1 option:selected').val();
+   var id_r2 = $('#select-r2 option:selected').val();
+   var annuario_id = $('#select-annuario option:selected').val();
 
-    var s1_selected = ''
+   var s1_selected = ''
 
-    $('#select-r1').on('change', function() {
-        id_r1 = $('#select-r1 option:selected').val();
-        aggiorna_lista_s1()
-        })
+   $('#select-r1').on('change', function () {
+      id_r1 = $('#select-r1 option:selected').val();
+      aggiorna_lista_s1()
+   })
 
-    $('#select-r2').on('change', function() {
-        id_r2 = $('#select-r2 option:selected').val();
-        aggiorna_lista_s1()
-        })
+   $('#select-r2').on('change', function () {
+      id_r2 = $('#select-r2 option:selected').val();
+      aggiorna_lista_s1()
+   })
 
-    $('#select-annuario').on('change', function(){
-        annuario_id = $('#select-annuario option:selected').val();
-        aggiorna_lista_s1()
+   $('#select-annuario').on('change', function () {
+      annuario_id = $('#select-annuario option:selected').val();
+      aggiorna_lista_s1()
 
-        })
-
-
+   })
 
 
-window.onload = function () {
-
-    aggiorna_lista_s1()
 
 
-    }
+   window.onload = function () {
+
+      aggiorna_lista_s1()
+
+
+   }
 
 </script>
 
