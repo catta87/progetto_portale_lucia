@@ -4,59 +4,20 @@
 
 
 <h2>{{soggetto.nome_completo}}</h2>
+<div>
 {% regroup opere by annuario.nome as gruppi %}
 {% for gruppo in gruppi %}
     <div>
         <h5><b>{{ gruppo.grouper }}</b></h5>
-        <div>
         {% for img in gruppo.list %}
-             <img onclick="detail('{%url 'opera-detail' img.id%}')" id="img-{{img.id}}" class="img-thumbnail" src="{{img.thumbnail.url}}" alt="..." >
+        <img onclick="detail('{%url 'opera-detail' img.id%}')"
+             id="img-{{img.id}}" class="img-thumbnail" src="{{img.thumbnail.url}}" alt="..." >
         {% endfor %}
-        </div>
     </div>
-
-
-<div class="modal" id="imgModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Modal Heading</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-
-      <!-- Modal body -->
-      <div id="modal-img" class="modal-body"></div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-
-    </div>
-  </div>
+{% endfor %}
 </div>
 
 
-
-
-<script>
-
-    function detail(url){
-         ajax=$.ajax({
-            type: "GET",
-            url: url,
-            success: function( data ){
-                    $('#modal-img' ).html( data.html );
-                    $('#imgModal').modal('toggle');
-                }
-            });
-    }
-
-
-</script>
-{% endfor %}
 
 
 

@@ -2,10 +2,12 @@
 {%load static%}
 
 {%block title%}Soggetti{%endblock title%}
-
+{%block header%}
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="{%static 'pubblicita/functions.js'%}"></script>
+{%endblock%}
 {% block content%}
 
-<script src="https://d3js.org/d3.v5.min.js"></script>
 
 
 <div class="soggetto-list">
@@ -41,15 +43,15 @@
    </div>
 
 
-
    <div class="-content">
 
       <div class="test-1">
          <!-- ELENCO SOGGETTI-->
          <div id='listaSoggetti'></div>
       </div>
+      <!-- ELENCO IMMAGINI-->
       <div class="test-2">
-         <section id="immagini"></section>
+         <div id="immagini"></div>
       </div>
 
    </div>
@@ -58,8 +60,9 @@
 
 </div>
 
+<div class="modal" id="imgModal">
 
-<script src="{%static 'pubblicita/functions.js'%}"></script>
+</div>
 
 
 
@@ -94,7 +97,26 @@
       aggiorna_list();
    });
 
+
+
+
+
 </script>
 
+<script>
+    function detail(url){
+         console.log('detail')
+         ajax=$.ajax({
+            type: "GET",
+            url: url,
+            success: function( data ){
+                    $('#imgModal' ).html( data.html );
+                    $('#imgModal').modal('toggle');
+                }
+            });
+    }
+</script>
 
 {%endblock%}
+
+

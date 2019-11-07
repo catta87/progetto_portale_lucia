@@ -120,46 +120,48 @@ function crea_grafici(AR,PH,AZ,AP,AD,TIPI){
 }
 
 // Funzioni in lista soggetti
-function soggetto_list(data){
+function soggetto_list(data) {
 
-    var data_list = JSON.parse(data);
+   var data_list = JSON.parse(data);
 
-    // svuoto div del sogg
-    d3.select("#listaSoggetti")
-        .selectAll("div")
-        .remove()
+   // svuoto div del sogg
+   d3.select("#listaSoggetti")
+      .selectAll("div")
+      .remove()
 
-    // creo nuovo elenco del sogg 1
-    var div_s1 = d3.select("#listaSoggetti")
-        .selectAll("div")
-        .data(data_list)
-        .enter()
-        .append("div")
-        .style("border-style","solid").style("margin-style","1px")
-        .on("mouseover", function(d){
-            d3.select(this).style('background-color',"#e6f2ff")
-            return get_images(d.id)})
+   // creo nuovo elenco del sogg 1
+   var div_s1 = d3.select("#listaSoggetti")
+      .selectAll("div")
+      .data(data_list)
+      .enter()
+      .append("div")
+      .attr("class", "-content__item")
+      .on("mouseover", function (d) {
+         d3.select(this).style('background-color', "#e6f2ff")
 
-        .on("mouseout", function(d){
-            d3.select(this).style('background-color',"#ffffff")
-            return get_images(d.id)})
+      })
+      .on("click", function (d) {
+                 return get_images(d.id)
+              })
+      .on("mouseout", function (d) {
+         d3.select(this).style('background-color', "#ffffff")
+      })
 
-    div_s1.append('a')
-        .attr("href", function(d){return url_soggetto_detail.replace('0',d.id)})
-        .text(function(d) {return d.nome_completo})
+   div_s1.append('a')
+      .attr("href", function (d) { return url_soggetto_detail.replace('0', d.id) })
+      .text(function (d) { return d.nome_completo })
 
 
 
+   div_s1.append('span')
+      .attr("class", "-badge")
+      .text(function (d) { return d.my_ruoli })
 
-    div_s1.append('span')
-        .attr("class","badge badge-pill badge-secondary float-right")
-        .text(function(d){return d.my_ruoli})
+   div_s1.append("span")
+      .attr("class", "-badge")
+      .text(function (d) { return d.opere_count })
 
-    div_s1.append("span")
-        .attr("class","badge badge-pill badge-secondary float-right")
-        .text(function(d){return d.opere_count})
-
-    }
+}
 function aggiorna_list(url,ruolo,annuario,ordinamento){
         ajax=$.ajax({
                     type: "POST",
@@ -184,69 +186,65 @@ function get_images(soggetto_id){
     }
 
 //Funzioni in relazioni
+function s1_list(data) {
+   console.log('s1_list')
+   var data_list = JSON.parse(data);
 
-function s1_list(data){
-    console.log('s1_list')
-    var data_list = JSON.parse(data);
+   // svuoto ul del sogg 1
+   d3.select("#s1")
+      .selectAll("div")
+      .remove()
 
-    // svuoto ul del sogg 1
-    d3.select("#s1")
-        .selectAll("div")
-        .remove()
+   // creo nuovo elenco del sogg 1
+   var div_s1 = d3.select("#s1")
+      .selectAll("div")
+      .data(data_list.s1) // <---- s1
 
-    // creo nuovo elenco del sogg 1
-    var div_s1 = d3.select("#s1")
-        .selectAll("div")
-        .data(data_list.s1) // <---- s1
+   div_s1.enter()
+      .append("div")
+      .attr('id', function (d, i) { return d.id })
+      .text(function (d) { return d.nome_completo })
+      .on("click", function (d, i) {
+         d3.select(this).style('background-color', "#e6f2ff")
+         s1_selected = d.id
+         aggiorna_lista_s2(d)
 
-    div_s1.enter()
-        .append("div")
-        .attr('id',function(d,i){return d.id})
-        .style("border-style","solid").style("margin-style","1px")
-        .text(function(d) {return d.nome_completo})
-        .on("mouseover",function(d,i){
-            d3.select(this).style('background-color',"#e6f2ff")
-            s1_selected = d.id
-            aggiorna_lista_s2(d)
+      })
+      .on("mouseout", function (d, i) {
+         d3.select(this).style('background-color', "#ffffff")
 
-        })
-        .on("mouseout",function(d,i){
-            d3.select(this).style('background-color',"#ffffff")
+      })
 
-        })
+}
+function s2_list(data) {
+   var data_list = JSON.parse(data);
 
-    }
-function s2_list(data){
-    console.log('s2_list')
-    var data_list = JSON.parse(data);
+   // svuoto ul del sogg 2
+   d3.select("#s2")
+      .selectAll("div")
+      .remove()
 
-    // svuoto ul del sogg 2
-    d3.select("#s2")
-        .selectAll("div")
-        .remove()
-
-    // creo nuovo elenco del sogg 2
-    var div_s2 = d3.select("#s2")
-        .selectAll("div")
-        .data(data_list)
+   // creo nuovo elenco del sogg 2
+   var div_s2 = d3.select("#s2")
+      .selectAll("div")
+      .data(data_list)
 
 
-    div_s2.enter()
-        .append("div")
-        .style("border-style","solid").style("margin-style","1px")
-        .attr('id',function(d,i){return d.id})
-        .text(function(d) {return d.nome_completo})
-       .on("mouseover",function(d,i){
-            d3.select(this).style('background-color',"#e6f2ff")
-            aggiorna_lista_imm(d.id)
+   div_s2.enter()
+      .append("div")
+      .attr('id', function (d, i) { return d.id })
+      .text(function (d) { return d.nome_completo })
+      .on("click", function (d, i) {
+         d3.select(this).style('background-color', "#e6f2ff")
+         aggiorna_lista_imm(d.id)
 
-        })
-        .on("mouseout",function(d,i){
-            d3.select(this).style('background-color',"#ffffff")
+      })
+      .on("mouseout", function (d, i) {
+         d3.select(this).style('background-color', "#ffffff")
 
-        })
+      })
 
-    }
+}
 function aggiorna_lista_s1(){
 
     console.log('aggiorna_list_s1')
