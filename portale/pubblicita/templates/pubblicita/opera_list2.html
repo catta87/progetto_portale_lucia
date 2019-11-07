@@ -7,22 +7,5 @@
 <img onclick="detail('{%url 'opera-detail' opera.id%}')" id="img-{{opera.id}}" class="img-thumbnail" src="{{opera.thumbnail.url}}" alt="..." >
 {% endfor %}
 
-<div class="modal" id="imgModal">
-
-</div>
-
-<script>
-
-    function detail(url){
-         ajax=$.ajax({
-            type: "GET",
-            url: url,
-            success: function( data ){
-                    $('#imgModal' ).html( data.html );
-                    $('#imgModal').modal('toggle');
-                }
-            });
-    }
-</script>
 
 

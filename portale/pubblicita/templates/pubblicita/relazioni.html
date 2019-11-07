@@ -60,6 +60,21 @@
 
 </div>
 
+<div class="modal" id="imgModal"></div>
+
+<script>
+
+    function detail(url){
+         ajax=$.ajax({
+            type: "GET",
+            url: url,
+            success: function( data ){
+                    $('#imgModal' ).html( data.html );
+                    $('#imgModal').modal('toggle');
+                }
+            });
+    }
+</script>
 
 <script>
 
