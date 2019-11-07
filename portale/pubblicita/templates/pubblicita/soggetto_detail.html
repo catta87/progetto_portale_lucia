@@ -46,7 +46,7 @@
             <p style="display: inline">({{gruppo.list|length}} opere)</p>
             <div id="gr_{{ gruppo.grouper}}" class="collapse">
                {% for img in gruppo.list %}
-               <img onclick="detail('{{img.img.url}}')" class="img-thumbnail" src="{{img.thumbnail.url}}" alt="...">
+               <img onclick="detail('{%url 'opera-detail' img.id%}')" class="img-thumbnail" src="{{img.thumbnail.url}}" alt="...">
                {% endfor %}
             </div>
          </div>
@@ -62,6 +62,41 @@
 
 </div>
 
+
+
+<div class="modal" id="imgModal"></div>
+<script>
+    function detail(url){
+         console.log('detail')
+         ajax=$.ajax({
+            type: "GET",
+            url: url,
+            success: function( data ){
+                    $('#imgModal' ).html( data.html );
+                    $('#imgModal').modal('toggle');
+                }
+            });
+    }
+</script>
+
+<script>
+
+    // dati per grafici
+
+   var ar_data = JSON.parse('{{AR|safe}}');
+   var ph_data = JSON.parse('{{PH|safe}}');
+   var az_data = JSON.parse('{{AZ|safe}}');
+   var ap_data = JSON.parse('{{AP|safe}}');
+   var ad_data = JSON.parse('{{AD|safe}}');
+   var tipi_data = JSON.parse('{{tipi|safe}}');
+
+   crea_grafici(ar_data, ph_data, az_data, ap_data, ad_data, JSON.parse('{{tipi|safe}}'))
+
+
+
+</script>
+
+{%endblock%}
 
 <!-- MODAL INGRADICI IMMAGINE -->
 <div class="modal" id="imgModal">
@@ -98,21 +133,3 @@
 
    }
 </script>
-
-<script>
-
-
-   var ar_data = JSON.parse('{{AR|safe}}');
-   var ph_data = JSON.parse('{{PH|safe}}');
-   var az_data = JSON.parse('{{AZ|safe}}');
-   var ap_data = JSON.parse('{{AP|safe}}');
-   var ad_data = JSON.parse('{{AD|safe}}');
-   var tipi_data = JSON.parse('{{tipi|safe}}');
-
-   crea_grafici(ar_data, ph_data, az_data, ap_data, ad_data, JSON.parse('{{tipi|safe}}'))
-
-
-
-</script>
-
-{%endblock%}

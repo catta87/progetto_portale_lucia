@@ -97,6 +97,7 @@ def soggetti(request):
     context = {'soggetti': soggetti, 'ruoli':ruoli, 'annuari':annuari, 'ordini':ordini,'opts':opts}
 
     return render(request, template, context)
+
 @csrf_exempt
 def soggetti_ajax(request): # TEST
 
@@ -364,73 +365,9 @@ def opere_s1_s2_ajax(request):
 
     opere = opere.distinct()
 
-    html = render_to_string('pubblicita/opera_list2.html', {'opere': opere})
+    html = render_to_string('pubblicita/opera_list.html', {'opere': opere})
+
     res = {'html': html}
 
     return HttpResponse(json.dumps(res), mimetype)
 
-
-#
-# def relazioni_r1(request,r1):
-#     if r1 != 0:
-#         soggetti = list(Soggetto.objects.filter(relazione__ruolo__id=r1)
-#                         .values('nome_completo','id').distinct())
-#     else:
-#         soggetti = list(Soggetto.objects.all().values('nome_completo', 'id').distinct())
-#
-#     return JsonResponse(json.dumps(soggetti),safe=False)
-#
-# def relazioni_r2(request,r2,s1):
-#
-#
-#
-#     opere = Opera.objects.filter(relazione__soggetto__id=s1).values('id')
-#
-#     if r2 != 0:
-#         relazioni = Relazione.objects.filter(opera__id__in=opere).exclude(soggetto__id=s1)\
-#             .filter(ruolo__id=r2).distinct()\
-#             .values('soggetto__nome_completo','soggetto__id')\
-#             .annotate(n_opere=Count('opera__img'))
-#     else:
-#         relazioni = Relazione.objects.filter(opera__id__in=opere).exclude(soggetto__id=s1).distinct().values('soggetto__nome_completo','soggetto__id')\
-#             .annotate(n_opere=Count('opera__img'))
-#
-#
-#     for obj in relazioni:
-#         obj['s1'] = s1
-#
-#     return JsonResponse(json.dumps(list(relazioni)), safe=False)
-#
-# def relazioni_s1_s2(request,s2,s1):
-#     mimetype = 'application/json'
-#
-#     opere1 = Opera.objects.filter(relazione__soggetto__id=s1).values('id')
-#     opere2 = Opera.objects.filter(relazione__soggetto__id=s2).values('id')
-#
-#     opere = opere1 & opere2
-#
-#
-#     opere = Opera.objects.filter(id__in=Relazione.objects.filter(opera__id__in=opere).values('opera__id').distinct())
-#
-#     html = render_to_string('pubblicita/opera_list2.html', {'opere': opere})
-#
-#    # html = render_to_string('pubblicita/opera_list.html', {'opere': opere})
-#
-#     res = {'html': html}
-#
-#     return HttpResponse(json.dumps(res), mimetype)
-#
-# def relazioni_r1_r2(request,s1,s2):
-#
-#
-#     opere1 = Opera.objects.filter(relazione__ruolo__id=s1).values('id')
-#     opere2 = Opera.objects.filter(relazione__ruolo__id=s2).values('id')
-#
-#     opere = opere1 & opere2
-#
-#     s1 = Soggetto.objects.filter(relazione__opera__id__in=opere1).values('id','nome_completo')
-#     s2 = Soggetto.objects.filter(relazione__opera__id__in=opere2).values('id','nome_completo')
-#
-#     soggetti = {'s1':list(s1),'s2':list(s2)}
-#
-#     return JsonResponse(json.dumps(soggetti), safe=False)

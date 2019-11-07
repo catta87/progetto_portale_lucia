@@ -186,6 +186,10 @@ function get_images(soggetto_id){
     }
 
 //Funzioni in relazioni
+var div_s1_curr
+var div_s2_curr
+
+
 function s1_list(data) {
    console.log('s1_list')
    var data_list = JSON.parse(data);
@@ -202,18 +206,22 @@ function s1_list(data) {
 
    div_s1.enter()
       .append("div")
-      .attr('id', function (d, i) { return d.id })
+      .attr('id', function (d, i) { return 's1-'+d.id })
       .text(function (d) { return d.nome_completo })
       .on("click", function (d, i) {
-         d3.select(this).style('background-color', "#e6f2ff")
+
+         if(typeof div_s1_curr == 'undefined') {div_s1_curr='s1-'+d.id}
+         // resetta precedente div
+         $('#'+div_s1_curr).css('background-color',"#ffffff")
+         // aggiorn div_s1_curr colora div corrente
+         div_s1_curr ='s1-'+d.id
+          $('#'+div_s1_curr).css('background-color',"#e6f2ff")
+
          s1_selected = d.id
          aggiorna_lista_s2(d)
 
       })
-      .on("mouseout", function (d, i) {
-         d3.select(this).style('background-color', "#ffffff")
 
-      })
 
 }
 function s2_list(data) {
@@ -235,16 +243,23 @@ function s2_list(data) {
       .attr('id', function (d, i) { return d.id })
       .text(function (d) { return d.nome_completo })
       .on("click", function (d, i) {
-         d3.select(this).style('background-color', "#e6f2ff")
+
+
+       if(typeof div_s2_curr == 'undefined') {div_s2_curr=d.id}
+         // resetta precedente div
+         $('#'+div_s2_curr).css('background-color',"#ffffff")
+         // aggiorn div_s2_curr colora div corrente
+         div_s2_curr = d.id
+          $('#'+div_s2_curr).css('background-color',"#e6f2ff")
+
          aggiorna_lista_imm(d.id)
 
       })
-      .on("mouseout", function (d, i) {
-         d3.select(this).style('background-color', "#ffffff")
 
-      })
 
 }
+
+
 function aggiorna_lista_s1(){
 
     console.log('aggiorna_list_s1')
